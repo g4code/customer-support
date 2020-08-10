@@ -43,7 +43,7 @@ $customerSupport
 ### Install dependencies
 
 ```sh
-make install
+composer install
 ```
 
 ### Run unit tests
