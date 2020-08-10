@@ -3,7 +3,6 @@
 use G4\CustomerSupport\Adapter\Zendesk\Map\TicketMap;
 use G4\CustomerSupport\ParamsConst;
 use G4\CustomerSupport\Ticket;
-use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
 
 class TicketMapTest extends PHPUnit_Framework_TestCase

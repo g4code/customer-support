@@ -3,7 +3,6 @@
 use G4\CustomerSupport\Adapter\Zendesk\Map\CreateUpdateMap;
 use G4\CustomerSupport\Adapter\Zendesk\User\User;
 use G4\CustomerSupport\ParamsConst;
-use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
 
 class CreateUpdateMapTest extends PHPUnit_Framework_TestCase

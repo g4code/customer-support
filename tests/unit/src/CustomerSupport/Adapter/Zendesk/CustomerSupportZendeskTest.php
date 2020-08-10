@@ -1,8 +1,6 @@
 <?php
 
 use G4\CustomerSupport\Adapter\Zendesk\Repository\CreateOrUpdateUsersRepository;
-use G4\CustomerSupport\Adapter\Zendesk\User\User;
-use G4\CustomerSupport\ParamsConst;
 use G4\Gateway\Http;
 use G4\CustomerSupport\Adapter\Zendesk\CustomerSupportZendesk;
 use G4\CustomerSupport\Ticket;
@@ -61,20 +59,7 @@ class CustomerSupportZendeskTest extends PHPUnit_Framework_TestCase
         $this->ticket                 = null;
         $this->customerSupportZendesk = null;
     }
-
-//    public function SendCustomerSupportTicket()
-//    {
-//        $ticket = new Ticket(
-//            new Email('test@gmail.com'),
-//            new StringLiteral('name'),
-//            new StringLiteral('subject'),
-//            new StringLiteral('comment')
-//        );
-//        $ticket->setRequesterId(new StringLiteral('1235567'));
-//
-//        $gateway = new Http('url', new Options('test'));
-//        (new CustomerSupportZendesk($gateway, $ticket))->sendCustomerSupportTicket($ticket);
-//    }
+    
 
     /**
      *@expectedException  G4\CustomerSupport\Exceptions\FailedToSendCustomerSupportTicketException

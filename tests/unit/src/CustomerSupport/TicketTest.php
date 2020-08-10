@@ -1,10 +1,6 @@
 <?php
 
-use G4\CustomerSupport\Adapter\Zendesk\User\User;
-use G4\CustomerSupport\Adapter\Zendesk\User\UserFactory;
-use G4\CustomerSupport\ParamsConst;
 use G4\CustomerSupport\Ticket;
-use G4\ValueObject\Dictionary;
 use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
 
