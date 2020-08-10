@@ -59,7 +59,7 @@ class CustomerSupportZendeskTest extends PHPUnit_Framework_TestCase
         $this->ticket                 = null;
         $this->customerSupportZendesk = null;
     }
-    
+
 
     /**
      *@expectedException  G4\CustomerSupport\Exceptions\FailedToSendCustomerSupportTicketException

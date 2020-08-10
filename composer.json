@@ -6,6 +6,7 @@
     "customer",
     "support"
   ],
+  "homepage": "https://github.com/g4code/customer-support",
   "license": "MIT",
   "authors": [],
   "autoload": {
