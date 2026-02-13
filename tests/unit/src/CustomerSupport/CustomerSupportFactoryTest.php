@@ -6,75 +6,73 @@ use G4\Gateway\Http;
 use G4\Gateway\Options;
 use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
+use PHPUnit\Framework\TestCase;
 
-class CustomerSupportFactoryTest extends \PHPUnit_Framework_TestCase
+class CustomerSupportFactoryTest extends TestCase
 {
 
-    public function testSetEmail()
+    public function testSetEmail(): void
     {
         $result = (new CustomerSupportFactory())->setEmail(new Email('test@email.com'));
         $this->assertInstanceOf(CustomerSupportFactory::class, $result);
     }
 
-    public function testSetName()
+    public function testSetName(): void
     {
         $result = (new CustomerSupportFactory())->setName(new StringLiteral('name'));
         $this->assertInstanceOf(CustomerSupportFactory::class, $result);
     }
 
-    public function testSetSubject()
+    public function testSetSubject(): void
     {
         $result = (new CustomerSupportFactory())->setSubject(new StringLiteral('subject'));
         $this->assertInstanceOf(CustomerSupportFactory::class, $result);
     }
 
-    public function testSetComment()
+    public function testSetComment(): void
     {
         $result = (new CustomerSupportFactory())->setComment(new StringLiteral('comment'));
         $this->assertInstanceOf(CustomerSupportFactory::class, $result);
     }
 
-    public function testSetGateway()
+    public function testSetGateway(): void
     {
         $result = (new CustomerSupportFactory())->setGateway(new Http('url', new Options()));
         $this->assertInstanceOf(CustomerSupportFactory::class, $result);
     }
 
-    public function testSetAdapter()
+    public function testSetAdapter(): void
     {
         $result = (new CustomerSupportFactory())->setAdapter(new StringLiteral('Zendesk'));
         $this->assertInstanceOf(CustomerSupportFactory::class, $result);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Email not set
-     * @expectedExceptionCode 400
-     */
-    public function testCreateInstanceThrowEmailNotSetException()
+    public function testCreateInstanceThrowEmailNotSetException(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Email not set');
+        $this->expectExceptionCode(400);
+        
         (new CustomerSupportFactory())->createInstance();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessageName Name not set
-     * @expectedExceptionCode 400
-     */
-    public function testCreateInstanceThrowNameNotSetException()
+    public function testCreateInstanceThrowNameNotSetException(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Name not set');
+        $this->expectExceptionCode(400);
+        
         $factory = (new CustomerSupportFactory())
             ->setEmail(new Email('test@email.com'));
         $factory->createInstance();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Subject not set
-     * @expectedExceptionCode 400
-     */
-    public function testCreateInstanceThrowSubjectNotSetException()
+    public function testCreateInstanceThrowSubjectNotSetException(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Subject not set');
+        $this->expectExceptionCode(400);
+        
         $factory = (new CustomerSupportFactory())
             ->setEmail(new Email('test@email.com'))
             ->setName(new StringLiteral('name'));
@@ -82,13 +80,12 @@ class CustomerSupportFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->createInstance();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Comment not set
-     * @expectedExceptionCode 400
-     */
-    public function testCreateInstanceThrowCommentNotSetException()
+    public function testCreateInstanceThrowCommentNotSetException(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Comment not set');
+        $this->expectExceptionCode(400);
+        
         $factory = (new CustomerSupportFactory())
             ->setEmail(new Email('test@email.com'))
             ->setName(new StringLiteral('name'))
@@ -97,13 +94,12 @@ class CustomerSupportFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->createInstance();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Gateway not set
-     * @expectedExceptionCode 400
-     */
-    public function testCreateInstanceThrowGatewayNotSetException()
+    public function testCreateInstanceThrowGatewayNotSetException(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Gateway not set');
+        $this->expectExceptionCode(400);
+        
         $factory = (new CustomerSupportFactory())
             ->setEmail(new Email('test@email.com'))
             ->setName(new StringLiteral('name'))
@@ -113,7 +109,7 @@ class CustomerSupportFactoryTest extends \PHPUnit_Framework_TestCase
         $factory->createInstance();
     }
 
-    public function testCreateInstance()
+    public function testCreateInstance(): void
     {
         $factory = (new CustomerSupportFactory())
             ->setEmail(new Email('test@email.com'))
@@ -128,12 +124,11 @@ class CustomerSupportFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(CustomerSupportZendesk::class, $result);
     }
 
-    /**
-     * @expectedException G4\CustomerSupport\Exceptions\AdapterNotImplementedException
-     * @expectedExceptionMessage Adapter 'Test' not implemented
-     */
-    public function testCreateInstanceThrowException()
+    public function testCreateInstanceThrowException(): void
     {
+        $this->expectException(\G4\CustomerSupport\Exceptions\AdapterNotImplementedException::class);
+        $this->expectExceptionMessage("Adapter 'Test' not implemented");
+        
         $factory = (new CustomerSupportFactory())
             ->setEmail(new Email('test@email.com'))
             ->setName(new StringLiteral('name'))

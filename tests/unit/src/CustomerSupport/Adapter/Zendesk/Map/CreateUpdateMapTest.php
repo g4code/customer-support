@@ -4,16 +4,15 @@ use G4\CustomerSupport\Adapter\Zendesk\Map\CreateUpdateMap;
 use G4\CustomerSupport\Adapter\Zendesk\User\User;
 use G4\CustomerSupport\ParamsConst;
 use G4\ValueObject\StringLiteral;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class CreateUpdateMapTest extends PHPUnit_Framework_TestCase
+class CreateUpdateMapTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | User
-     */
-    private $user;
-    private $data;
+    private MockObject|User $user;
+    private array $data;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->user = $this->getMockBuilder(User::class)
             ->disableOriginalConstructor()
@@ -27,13 +26,12 @@ class CreateUpdateMapTest extends PHPUnit_Framework_TestCase
         ];
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->data = null;
-        $this->user = null;
+        unset($this->data, $this->user);
     }
 
-    public function testMap()
+    public function testMap(): void
     {
         $this->user
             ->expects($this->once())

@@ -6,25 +6,16 @@ use G4\Gateway\Http;
 use G4\Gateway\Response;
 use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class CreateTicketRepositoryTest extends \PHPUnit_Framework_TestCase
+class CreateTicketRepositoryTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Http
-     */
-    private $httpGateway;
+    private MockObject|Http $httpGateway;
+    private MockObject|Response $response;
+    private Ticket $ticket;
 
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Response
-     */
-    private $response;
-
-    /**
-     * @var Ticket
-     */
-    private $ticket;
-
-    public function setUp()
+    protected function setUp(): void
     {
         $this->httpGateway = $this->getMockBuilder(Http::class)
             ->disableOriginalConstructor()
@@ -42,19 +33,16 @@ class CreateTicketRepositoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->httpGateway = null;
-        $this->response    = null;
-        $this->ticket      = null;
+        unset($this->httpGateway, $this->response, $this->ticket);
     }
 
-    /**
-     * @expectedException G4\CustomerSupport\Adapter\Zendesk\Exceptions\FailedToCreateTicketException
-     * @expectedExceptionMessage Failed to create ticket
-     */
-    public function testPostThrowException()
+    public function testPostThrowException(): void
     {
+        $this->expectException(\G4\CustomerSupport\Adapter\Zendesk\Exceptions\FailedToCreateTicketException::class);
+        $this->expectExceptionMessage('Failed to create ticket');
+        
         $this->httpGateway
             ->expects($this->once())
             ->method('post')
@@ -68,7 +56,7 @@ class CreateTicketRepositoryTest extends \PHPUnit_Framework_TestCase
         (new CreateTicketRepository($this->httpGateway))->post($this->ticket);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $this->httpGateway
             ->expects($this->once())

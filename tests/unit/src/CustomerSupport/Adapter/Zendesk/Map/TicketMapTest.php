@@ -4,16 +4,15 @@ use G4\CustomerSupport\Adapter\Zendesk\Map\TicketMap;
 use G4\CustomerSupport\ParamsConst;
 use G4\CustomerSupport\Ticket;
 use G4\ValueObject\StringLiteral;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class TicketMapTest extends PHPUnit_Framework_TestCase
+class TicketMapTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Ticket
-     */
-    private $ticket;
-    private $data;
+    private MockObject|Ticket $ticket;
+    private array $data;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->ticket = $this->getMockBuilder(Ticket::class)
             ->disableOriginalConstructor()
@@ -30,13 +29,12 @@ class TicketMapTest extends PHPUnit_Framework_TestCase
         ];
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->data   = null;
-        $this->ticket = null;
+        unset($this->data, $this->ticket);
     }
 
-    public function testMap()
+    public function testMap(): void
     {
         $this->ticket
             ->expects($this->once())
