@@ -4,13 +4,14 @@ use G4\CustomerSupport\Adapter\Zendesk\User\User;
 use G4\CustomerSupport\Adapter\Zendesk\User\UserFactory;
 use G4\CustomerSupport\ParamsConst;
 use G4\ValueObject\Dictionary;
+use PHPUnit\Framework\TestCase;
 
-class UserFactoryTest extends \PHPUnit_Framework_TestCase
+class UserFactoryTest extends TestCase
 {
-    private $factory;
-    private $data;
+    private UserFactory $factory;
+    private Dictionary $data;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->data = new Dictionary([
             ParamsConst::EMAIL => 'test@email.com',
@@ -20,12 +21,12 @@ class UserFactoryTest extends \PHPUnit_Framework_TestCase
         $this->factory = new UserFactory();
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->data = null;
+        unset($this->data, $this->factory);
     }
 
-    public function testReconstituteWithBasicData()
+    public function testReconstituteWithBasicData(): void
     {
         $user =  $this->factory
             ->set($this->data)
@@ -35,7 +36,7 @@ class UserFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test@email.com', $user->getEmail());
     }
 
-    public function testReconstituteWithUserId()
+    public function testReconstituteWithUserId(): void
     {
         $data = new Dictionary([
             ParamsConst::EMAIL => 'test@email.com',

@@ -5,25 +5,16 @@ use G4\CustomerSupport\Adapter\Zendesk\User\User;
 use G4\Gateway\Http;
 use G4\Gateway\Response;
 use G4\ValueObject\Email;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class SearchUsersRepositoryTest extends \PHPUnit_Framework_TestCase
+class SearchUsersRepositoryTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Http
-     */
-    private $httpGateway;
+    private MockObject|Http $httpGateway;
+    private MockObject|Response $response;
+    private Email $email;
 
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Response
-     */
-    private $response;
-
-    /**
-     * @var Email
-     */
-    private $email;
-
-    public function setUp()
+    protected function setUp(): void
     {
         $this->httpGateway = $this->getMockBuilder(Http::class)
             ->disableOriginalConstructor()
@@ -36,19 +27,16 @@ class SearchUsersRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->email = new Email('test@email.com');
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->httpGateway = null;
-        $this->response    = null;
-        $this->email       = null;
+        unset($this->httpGateway, $this->response, $this->email);
     }
 
-    /**
-     * @expectedException G4\CustomerSupport\Adapter\Zendesk\Exceptions\FailedToFindEmailException
-     * @expectedExceptionMessage Failed to find user with email: 'test@email.com'
-     */
-    public function testFindUserByEmailThrowException()
+    public function testFindUserByEmailThrowException(): void
     {
+        $this->expectException(\G4\CustomerSupport\Adapter\Zendesk\Exceptions\FailedToFindEmailException::class);
+        $this->expectExceptionMessage("Failed to find user with email: 'test@email.com'");
+        
         $this->httpGateway
             ->expects($this->once())
             ->method('get')
@@ -62,7 +50,7 @@ class SearchUsersRepositoryTest extends \PHPUnit_Framework_TestCase
         (new SearchUsersRepository($this->httpGateway))->findUserByEmail($this->email);
     }
 
-    public function testFindUserByEmail()
+    public function testFindUserByEmail(): void
     {
         $responseData = [
             0 => [

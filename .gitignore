@@ -7,6 +7,7 @@
 *.gz
 
 composer.phar
+composer.lock
 vendor
 
 .buildpath
@@ -15,6 +16,7 @@ vendor
 .idea
 
 tests/unit/coverage/*
+tests/unit/.phpunit.cache/
 tests/integration/coverage/*
 .vagrant/
 .bash_history

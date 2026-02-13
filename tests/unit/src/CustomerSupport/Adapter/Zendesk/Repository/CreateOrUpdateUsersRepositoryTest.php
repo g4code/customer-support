@@ -6,25 +6,16 @@ use G4\Gateway\Http;
 use G4\Gateway\Response;
 use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class CreateOrUpdateUsersRepositoryTest extends \PHPUnit_Framework_TestCase
+class CreateOrUpdateUsersRepositoryTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Http
-     */
-    private $httpGateway;
+    private MockObject|Http $httpGateway;
+    private MockObject|Response $response;
+    private User $user;
 
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Response
-     */
-    private $response;
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    public function setUp()
+    protected function setUp(): void
     {
         $this->httpGateway = $this->getMockBuilder(Http::class)
             ->disableOriginalConstructor()
@@ -37,19 +28,16 @@ class CreateOrUpdateUsersRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->user = new User(new Email('test@email.com'), new StringLiteral('name'));
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->httpGateway = null;
-        $this->response    = null;
-        $this->user        = null;
+        unset($this->httpGateway, $this->response, $this->user);
     }
 
-    /**
-     * @expectedException G4\CustomerSupport\Adapter\Zendesk\Exceptions\FailedToCreateUserException
-     * @expectedExceptionMessage Failed to create user
-     */
-    public function testPostThrowException()
+    public function testPostThrowException(): void
     {
+        $this->expectException(\G4\CustomerSupport\Adapter\Zendesk\Exceptions\FailedToCreateUserException::class);
+        $this->expectExceptionMessage('Failed to create user');
+        
         $this->httpGateway
             ->expects($this->once())
             ->method('post')
@@ -63,7 +51,7 @@ class CreateOrUpdateUsersRepositoryTest extends \PHPUnit_Framework_TestCase
         (new CreateOrUpdateUsersRepository($this->httpGateway))->post($this->user);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $this->httpGateway
             ->expects($this->once())

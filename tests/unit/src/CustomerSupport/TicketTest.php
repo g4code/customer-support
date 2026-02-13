@@ -3,35 +3,18 @@
 use G4\CustomerSupport\Ticket;
 use G4\ValueObject\Email;
 use G4\ValueObject\StringLiteral;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class TicketTest extends \PHPUnit_Framework_TestCase
+class TicketTest extends TestCase
 {
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | Email
-     */
-    private $email;
+    private MockObject|Email $email;
+    private MockObject|StringLiteral $name;
+    private MockObject|StringLiteral $subject;
+    private MockObject|StringLiteral $comment;
+    private Ticket $ticket;
 
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | StringLiteral
-     */
-    private $name;
-
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | StringLiteral
-     */
-    private $subject;
-
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject | StringLiteral
-     */
-    private $comment;
-
-    /**
-     * @var Ticket
-     */
-    private $ticket;
-
-    public function setUp()
+    protected function setUp(): void
     {
         $this->email = $this->getMockBuilder(Email::class)
             ->disableOriginalConstructor()
@@ -52,39 +35,36 @@ class TicketTest extends \PHPUnit_Framework_TestCase
         $this->ticket = new Ticket($this->email, $this->name, $this->subject, $this->comment);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
-        $this->email   = null;
-        $this->name    = null;
-        $this->subject = null;
-        $this->comment = null;
+        unset($this->email, $this->name, $this->subject, $this->comment, $this->ticket);
     }
 
-    public function testGetSetEmail()
+    public function testGetSetEmail(): void
     {
         $this->ticket->setEmail(new Email('test@email.com'));
         $this->assertEquals('test@email.com', $this->ticket->getEmail());
     }
 
-    public function testGetSetName()
+    public function testGetSetName(): void
     {
         $this->ticket->setName(new StringLiteral('name'));
         $this->assertEquals('name', $this->ticket->getName());
     }
 
-    public function testGetSetSubject()
+    public function testGetSetSubject(): void
     {
         $this->ticket->setSubject(new StringLiteral('subject'));
         $this->assertEquals('subject', $this->ticket->getSubject());
     }
 
-    public function testGetSetComment()
+    public function testGetSetComment(): void
     {
         $this->ticket->setComment(new StringLiteral('comment'));
         $this->assertEquals('comment', $this->ticket->getComment());
     }
 
-    public function testGetSetUserId()
+    public function testGetSetUserId(): void
     {
         $this->ticket->setRequesterId(new StringLiteral('123456789'));
         $this->assertEquals('123456789', $this->ticket->getRequesterId());
